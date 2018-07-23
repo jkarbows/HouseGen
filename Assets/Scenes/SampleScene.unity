@@ -89,7 +89,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000002, guid: 125007d27e5b42342a2f9e7d1d5c0176,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -2003,16 +2004,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   rootTransform: {fileID: 447097978}
-  brushRadius: 2.697114
+  brushRadius: 5.0998063
   brushHeight: 10
-  brushDensity: 0.25
+  brushDensity: 1.02
   maxRandomRotation: 360
   rotationStep: 90
   collisionTest: 0
   maxIntersectionVolume: 0
   maxSlope: 45
   randomizeAfterStamp: 1
-  alignToNormal: 1
+  alignToNormal: 0
   followOnSurface: 1
   selectedPrefabIndex: 0
   prefabPallete:

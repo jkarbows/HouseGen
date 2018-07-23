@@ -71,6 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4157060445005294}
+  - component: {fileID: 114089550234711932}
   m_Layer: 0
   m_Name: Int_Ext Wall w_ Window
   m_TagString: Untagged
@@ -396,3 +397,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 3.0068114, z: 0.09650278}
   m_Center: {x: -1.52, y: 1.4965943, z: -0.17649484}
+--- !u!114 &114089550234711932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1857053475215184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71bea4c010b684720a24c8646da392e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minScale: 1
+  maxScale: 1
+  gameObjects:
+  - {fileID: 1857053475215184}
