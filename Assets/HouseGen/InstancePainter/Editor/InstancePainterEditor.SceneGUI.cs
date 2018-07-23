@@ -15,7 +15,6 @@ namespace Gamekit3D.WorldBuilding
         void OnSceneGUI()
         {
             SceneView.RepaintAll();
-            //if (ip == null || ip.SelectedPrefab == null) return;
             var isErasing = Event.current.control;
             var controlId = GUIUtility.GetControlID(FocusType.Passive);
             var mousePos = Event.current.mousePosition;
@@ -48,7 +47,7 @@ namespace Gamekit3D.WorldBuilding
                     }
                     if (Event.current.alt)
                     {
-                        ip.brushRadius *= Event.current.delta.y < 0 ? 0.9f : 1.1f;
+                        ip.brushRadius += Event.current.delta.y < 0 ? -4 : 4;
                         CreateNewStamp();
                         Event.current.Use();
                     }
@@ -108,19 +107,13 @@ namespace Gamekit3D.WorldBuilding
         {
             switch (keyCode)
             {
-                case KeyCode.Period:
-                    AdjustMaxScale(0.9f);
-                    break;
-                case KeyCode.Slash:
-                    AdjustMaxScale(1.1f);
-                    break;
                 case KeyCode.Minus:
-                    ip.brushDensity *= 0.9f;
+                    ip.roomDensity *= 0.9f;
                     CreateNewStamp();
                     Event.current.Use();
                     break;
                 case KeyCode.Equals:
-                    ip.brushDensity *= 1.1f;
+                    ip.roomDensity *= 1;
                     CreateNewStamp();
                     Event.current.Use();
                     break;
@@ -130,12 +123,12 @@ namespace Gamekit3D.WorldBuilding
                     Event.current.Use();
                     break;
                 case KeyCode.LeftBracket:
-                    ip.brushRadius *= 0.9f;
+                    ip.brushRadius -= 4;
                     CreateNewStamp();
                     Event.current.Use();
                     break;
                 case KeyCode.RightBracket:
-                    ip.brushRadius *= 1.1f;
+                    ip.brushRadius += 4;
                     CreateNewStamp();
                     Event.current.Use();
                     break;

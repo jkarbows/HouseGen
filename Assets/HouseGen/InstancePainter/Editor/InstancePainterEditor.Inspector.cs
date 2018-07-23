@@ -37,14 +37,9 @@ namespace Gamekit3D.WorldBuilding
                 ip.rootTransform = (Transform)EditorGUILayout.ObjectField("Root Transform", ip.rootTransform, typeof(Transform), true);
                 return;
             }
-            EditorGUILayout.HelpBox("Stamp: Left Click\nErase: Ctrl + Left Click\nRotate: Shift + Scroll\nBrush Size: Alt + Scroll or [ and ]\nDensity: - =\nScale: . /\nSpace: Randomize", MessageType.Info);
+
+            EditorGUILayout.HelpBox("Stamp: Left Click\nErase: Ctrl + Left Click\nRotate: Shift + Scroll\nBrush Size: Alt + Scroll or [ and ]\nDensity: - =\nSpace: Randomize", MessageType.Info);
             base.OnInspectorGUI();
-            if (ip.prefabPallete == null || ip.prefabPallete.Length == 0)
-            {
-                EditorGUILayout.HelpBox("You must assign prefabs to the Prefab Pallete array.", MessageType.Error);
-                return;
-            }
-            GUILayout.Space(16);
 
             using (new EditorGUILayout.HorizontalScope())
             {
@@ -56,12 +51,7 @@ namespace Gamekit3D.WorldBuilding
                 EditorGUILayout.PrefixLabel("Follow Surface");
                 ip.followOnSurface = GUILayout.Toggle(ip.followOnSurface, GUIContent.none);
             }
-            using (new EditorGUILayout.HorizontalScope())
-            {
-                EditorGUILayout.PrefixLabel("Randomize each Stamp");
-                ip.randomizeAfterStamp = GUILayout.Toggle(ip.randomizeAfterStamp, GUIContent.none);
-            }
-
+            /*
             GUILayout.Space(16);
             if (ip.prefabPallete != null && ip.prefabPallete.Length > 0)
             {
@@ -91,10 +81,10 @@ namespace Gamekit3D.WorldBuilding
                 }
                 else
                 {
-                    variationsEditor.OnInspectorGUI();
+                    //variationsEditor.OnInspectorGUI();
                 }
 
-            }
+            }*/
         }
 
     }

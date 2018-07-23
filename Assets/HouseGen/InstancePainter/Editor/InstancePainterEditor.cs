@@ -51,7 +51,7 @@ namespace Gamekit3D.WorldBuilding
             while (stamp.transform.childCount > 0)
                 DestroyImmediate(stamp.transform.GetChild(0).gameObject);
 
-            var count = Mathf.Min(1000, (Mathf.PI * Mathf.Pow(ip.brushRadius, 2)) / (1f / ip.brushDensity));
+            var count = Mathf.Min(1000, (Mathf.PI * Mathf.Pow(ip.brushRadius, 2)) / (1f / ip.roomDensity));
 
             for (var i = 0; i < count; i++)
             {
@@ -60,12 +60,10 @@ namespace Gamekit3D.WorldBuilding
                 var p = Random.insideUnitCircle;
                 child.transform.localPosition = new Vector3(p.x, 0, p.y) * ip.brushRadius;
                 var eulerAngles = Vector3.zero;
-                if (ip.maxRandomRotation > 0)
-                {
-                    eulerAngles.y = Random.value * ip.maxRandomRotation;
-                    if (ip.rotationStep > 0)
-                        eulerAngles.y = Mathf.Round(eulerAngles.y / ip.rotationStep) * ip.rotationStep;
-                }
+                // set random rotation between 0 and 360
+                eulerAngles.y = Random.value * 360f;
+                // round rotation to 90 degree angles
+                eulerAngles.y = Mathf.Round(eulerAngles.y / 90f) * 90f;
                 child.transform.localEulerAngles = eulerAngles;
                 GameObject dummy;
                 if (variations != null)
@@ -75,8 +73,6 @@ namespace Gamekit3D.WorldBuilding
                 foreach (var c in dummy.GetComponentsInChildren<Collider>())
                     c.enabled = false;
                 dummy.transform.parent = child.transform;
-                if (variations != null)
-                    child.transform.localScale = Vector3.one * Mathf.Lerp(variations.minScale, variations.maxScale, Random.value);
                 dummy.transform.localPosition = Vector3.zero;
                 dummy.transform.localRotation = Quaternion.identity;
             }
@@ -149,8 +145,7 @@ namespace Gamekit3D.WorldBuilding
                     }
                 }
             }
-            if (ip.randomizeAfterStamp)
-                CreateNewStamp();
+            CreateNewStamp();
         }
 
         void RotateStamp(Vector2 delta)
@@ -160,12 +155,6 @@ namespace Gamekit3D.WorldBuilding
             {
                 t.localPosition = rotation * t.localPosition;
             }
-        }
-
-        void AdjustMaxScale(float s)
-        {
-            for (var i = 0; i < stamp.transform.childCount; i++)
-                stamp.transform.GetChild(i).localScale *= s;
         }
 
     }
