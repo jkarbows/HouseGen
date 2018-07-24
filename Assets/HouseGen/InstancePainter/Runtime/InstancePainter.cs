@@ -31,6 +31,7 @@ namespace Gamekit3D.WorldBuilding
         [HideInInspector] public int selectedPrefabIndex = 0;
 
         public GameObject[] prefabPallete;
+        public BaseCell baseCell;
 
         public GameObject SelectedPrefab
         {

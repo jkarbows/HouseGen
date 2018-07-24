@@ -22,6 +22,9 @@ namespace Gamekit3D.WorldBuilding
         List<Bounds> overlaps = new List<Bounds>();
         List<GameObject> overlappedGameObjects = new List<GameObject>();
 
+        int sizeX, sizeZ;
+        BaseCell[,] cells;
+
         void OnEnable()
         {
             stamp = new GameObject("Stamp");
@@ -51,9 +54,11 @@ namespace Gamekit3D.WorldBuilding
             while (stamp.transform.childCount > 0)
                 DestroyImmediate(stamp.transform.GetChild(0).gameObject);
 
+            Generate();
+
             var count = Mathf.Min(1000, (Mathf.PI * Mathf.Pow(ip.brushRadius, 2)) / (1f / ip.roomDensity));
 
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < 0 /*count*/; i++)
             {
                 var child = new GameObject("Dummy");
                 child.transform.parent = stamp.transform;
@@ -155,6 +160,39 @@ namespace Gamekit3D.WorldBuilding
             {
                 t.localPosition = rotation * t.localPosition;
             }
+        }
+
+        void Generate()
+        {
+            // todo: repeat for each floor, 2x2
+            // each cell is 4x4
+            sizeX = ip.brushRadius / 4;
+            sizeZ = ip.brushRadius / 4;
+            cells = new BaseCell[sizeX, sizeZ];
+            for (var x = 0; x < sizeX; x++)
+            {
+                for (var z = 0; z < sizeZ; z++)
+                {
+                    CreateCell(x, z);
+                }
+            }
+        }
+
+        private void CreateCell(int x, int z)
+        {
+            var child = new GameObject("Dummy");
+            child.transform.parent = stamp.transform;
+            child.transform.localPosition = new Vector3(x * 4 - sizeX * 4 * 0.5f + 0.5f, 0f, z * 4 - sizeZ * 4 * 0.5f + 0.5f);
+            child.transform.localEulerAngles = Vector3.zero;
+            BaseCell cell = PrefabUtility.InstantiatePrefab(ip.baseCell) as BaseCell;
+            foreach (var c in cell.GetComponentsInChildren<Collider>())
+                c.enabled = false;
+            cells[x, z] = cell;
+            cell.transform.parent = child.transform;
+            cell.transform.localPosition = Vector3.zero;
+            cell.transform.localRotation = Quaternion.identity;
+            // tut sets the parent to the maze's transform the sets localposition to the new vector3
+            // doesn't do any of the child thing
         }
 
     }

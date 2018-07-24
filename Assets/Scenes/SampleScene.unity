@@ -2010,12 +2010,12 @@ MonoBehaviour:
   collisionTest: 0
   maxIntersectionVolume: 0
   maxSlope: 45
-  randomizeAfterStamp: 1
   alignToNormal: 0
   followOnSurface: 1
   selectedPrefabIndex: 0
   prefabPallete:
   - {fileID: 1857053475215184, guid: b36c681c5848bcb4184b70ea6e7639ad, type: 2}
+  baseCell: {fileID: 114552123989842718, guid: 5bdab47df7f8a4349bf29b4187cc9df8, type: 2}
 --- !u!1001 &494083524
 Prefab:
   m_ObjectHideFlags: 0
@@ -2882,7 +2882,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh20616
+  m_Name: pb_Mesh12222
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
