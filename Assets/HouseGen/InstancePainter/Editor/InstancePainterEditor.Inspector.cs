@@ -38,6 +38,14 @@ namespace Gamekit3D.WorldBuilding
                 return;
             }
 
+            // editor ui change check code
+            /*using (var check = new EditorGUI.ChangeCheckScope()) {
+                base.OnInspectorGUI();
+                if (check.changed) {
+                    // reset stamp
+                }
+            }*/
+
             EditorGUILayout.HelpBox("Stamp: Left Click\nErase: Ctrl + Left Click\nRotate: Shift + Scroll\nBrush Size: Alt + Scroll or [ and ]\nDensity: - =\nSpace: Randomize", MessageType.Info);
             base.OnInspectorGUI();
 

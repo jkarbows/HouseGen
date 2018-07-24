@@ -22,7 +22,7 @@ namespace Gamekit3D.WorldBuilding
         List<Bounds> overlaps = new List<Bounds>();
         List<GameObject> overlappedGameObjects = new List<GameObject>();
 
-        int sizeX, sizeZ;
+        IntVector2 size;
         BaseCell[,] cells;
 
         void OnEnable()
@@ -166,28 +166,29 @@ namespace Gamekit3D.WorldBuilding
         {
             // todo: repeat for each floor, 2x2
             // each cell is 4x4
-            sizeX = ip.brushRadius / 4;
-            sizeZ = ip.brushRadius / 4;
-            cells = new BaseCell[sizeX, sizeZ];
-            for (var x = 0; x < sizeX; x++)
+            size.x = ip.brushRadius / 4;
+            size.z = ip.brushRadius / 4;
+            cells = new BaseCell[size.x, size.z];
+            for (var x = 0; x < size.x; x++)
             {
-                for (var z = 0; z < sizeZ; z++)
+                for (var z = 0; z < size.z; z++)
                 {
-                    CreateCell(x, z);
+                    CreateCell(new IntVector2(x, z));
                 }
             }
         }
 
-        private void CreateCell(int x, int z)
+        private void CreateCell(IntVector2 coordinates)
         {
             var child = new GameObject("Dummy");
             child.transform.parent = stamp.transform;
-            child.transform.localPosition = new Vector3(x * 4 - sizeX * 4 * 0.5f + 0.5f, 0f, z * 4 - sizeZ * 4 * 0.5f + 0.5f);
+            child.transform.localPosition = new Vector3(coordinates.x * 4 - size.x * 4 * 0.5f + 0.5f, 0f, coordinates.z * 4 - size.z * 4 * 0.5f + 0.5f);
             child.transform.localEulerAngles = Vector3.zero;
             BaseCell cell = PrefabUtility.InstantiatePrefab(ip.baseCell) as BaseCell;
             foreach (var c in cell.GetComponentsInChildren<Collider>())
                 c.enabled = false;
-            cells[x, z] = cell;
+            cells[coordinates.x, coordinates.z] = cell;
+            cell.coordinates = coordinates;
             cell.transform.parent = child.transform;
             cell.transform.localPosition = Vector3.zero;
             cell.transform.localRotation = Quaternion.identity;
