@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseCell : MonoBehaviour {
-    public IntVector2 coordinates;
+namespace ProcGenKit.WorldBuilding
+{
+    public class BaseCell : MonoBehaviour
+    {
+        public IntVector2 coordinates;
+    }
 }

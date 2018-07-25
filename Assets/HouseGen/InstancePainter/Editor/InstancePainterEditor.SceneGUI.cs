@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 using System;
 using System.Linq;
 
-namespace Gamekit3D.WorldBuilding
+namespace ProcGenKit.WorldBuilding
 {
 
     public partial class InstancePainterEditor : Editor

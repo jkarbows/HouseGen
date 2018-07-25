@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Gamekit3D.WorldBuilding
+namespace ProcGenKit.WorldBuilding
 {
 
     [ExecuteInEditMode]
@@ -24,7 +24,7 @@ namespace Gamekit3D.WorldBuilding
         [Range(0, 1)]
         public float maxIntersectionVolume = 0;
         [Range(0, 360)]
-        [HideInInspector]public float maxSlope = 180;
+        [HideInInspector] public float maxSlope = 180;
 
         [HideInInspector] public bool alignToNormal = true;
         [HideInInspector] public bool followOnSurface = true;

@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine.Rendering;
 
 
-namespace Gamekit3D.WorldBuilding
+namespace ProcGenKit.WorldBuilding
 {
 
     [CustomEditor(typeof(InstancePainter))]
@@ -162,6 +162,11 @@ namespace Gamekit3D.WorldBuilding
             }
         }
 
+        public BaseCell GetCell (IntVector2 coordinates)
+        {
+            return cells[coordinates.x, coordinates.z];
+        }
+
         void Generate()
         {
             // todo: repeat for each floor, 2x2
@@ -169,12 +174,11 @@ namespace Gamekit3D.WorldBuilding
             size.x = ip.brushRadius / 4;
             size.z = ip.brushRadius / 4;
             cells = new BaseCell[size.x, size.z];
-            for (var x = 0; x < size.x; x++)
+            IntVector2 coordinates = RandomCoordinates;
+            while (ContainsCoordinates(coordinates) && GetCell(coordinates) == null)
             {
-                for (var z = 0; z < size.z; z++)
-                {
-                    CreateCell(new IntVector2(x, z));
-                }
+                CreateCell(coordinates);
+                coordinates += CompassDirections.RandomValue.ToIntVector2();
             }
         }
 
@@ -192,8 +196,22 @@ namespace Gamekit3D.WorldBuilding
             cell.transform.parent = child.transform;
             cell.transform.localPosition = Vector3.zero;
             cell.transform.localRotation = Quaternion.identity;
-            // tut sets the parent to the maze's transform the sets localposition to the new vector3
-            // doesn't do any of the child thing
+            // originally set the parent to the maze's transform
+            // then set localposition to the new vector3
+            // instead of any of the child stuff
+        }
+
+        public IntVector2 RandomCoordinates
+        {
+            get
+            {
+                return new IntVector2(Random.Range(0, size.x), Random.Range(0, size.z));
+            }
+        }
+
+        public bool ContainsCoordinates (IntVector2 coordinate)
+        {
+            return coordinate.x >= 0 && coordinate.x < size.x && coordinate.z >= 0 && coordinate.z < size.z;
         }
 
     }

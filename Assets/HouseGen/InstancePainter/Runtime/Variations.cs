@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gamekit3D.WorldBuilding
+namespace ProcGenKit.WorldBuilding
 {
     [System.Serializable]
     public class Variations : MonoBehaviour
