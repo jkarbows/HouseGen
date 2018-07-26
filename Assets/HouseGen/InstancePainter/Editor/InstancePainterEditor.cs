@@ -174,15 +174,33 @@ namespace ProcGenKit.WorldBuilding
             size.x = ip.brushRadius / 4;
             size.z = ip.brushRadius / 4;
             cells = new BaseCell[size.x, size.z];
+            List<BaseCell> activeCells = new List<BaseCell>();
             IntVector2 coordinates = RandomCoordinates;
-            while (ContainsCoordinates(coordinates) && GetCell(coordinates) == null)
+            // do the first generation step so we have something to iterate from
+            activeCells.Add(CreateCell(RandomCoordinates));
+            while (activeCells.Count > 0)
             {
-                CreateCell(coordinates);
-                coordinates += CompassDirections.RandomValue.ToIntVector2();
+                PerformNextGenerationStep(activeCells);
             }
         }
 
-        private void CreateCell(IntVector2 coordinates)
+        private void PerformNextGenerationStep (List<BaseCell> activeCells)
+        {
+            int index = activeCells.Count - 1;
+            BaseCell currentCell = activeCells[index];
+            CompassDirection direction = CompassDirections.RandomValue;
+            IntVector2 coordinates = currentCell.coordinates + direction.ToIntVector2();
+            if (ContainsCoordinates(coordinates) && GetCell(coordinates) == null)
+            {
+                activeCells.Add(CreateCell(coordinates));
+            }
+            else
+            {
+                activeCells.RemoveAt(index);
+            }
+        }
+
+        private BaseCell CreateCell(IntVector2 coordinates)
         {
             var child = new GameObject("Dummy");
             child.transform.parent = stamp.transform;
@@ -199,6 +217,7 @@ namespace ProcGenKit.WorldBuilding
             // originally set the parent to the maze's transform
             // then set localposition to the new vector3
             // instead of any of the child stuff
+            return cell;
         }
 
         public IntVector2 RandomCoordinates
