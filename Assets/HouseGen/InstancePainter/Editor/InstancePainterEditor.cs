@@ -162,11 +162,6 @@ namespace ProcGenKit.WorldBuilding
             }
         }
 
-        public BaseCell GetCell (IntVector2 coordinates)
-        {
-            return cells[coordinates.x, coordinates.z];
-        }
-
         void Generate()
         {
             // todo: repeat for each floor, 2x2
@@ -190,12 +185,24 @@ namespace ProcGenKit.WorldBuilding
             BaseCell currentCell = activeCells[index];
             CompassDirection direction = CompassDirections.RandomValue;
             IntVector2 coordinates = currentCell.coordinates + direction.ToIntVector2();
-            if (ContainsCoordinates(coordinates) && GetCell(coordinates) == null)
+            if (ContainsCoordinates(coordinates))
             {
-                activeCells.Add(CreateCell(coordinates));
+                BaseCell neighbor = GetCell(coordinates);
+                if (neighbor == null)
+                {
+                    neighbor = CreateCell(coordinates);
+                    CreatePassage(currentCell, neighbor, direction);
+                    activeCells.Add(CreateCell(coordinates));
+                }
+                else
+                {
+                    CreateWall(currentCell, neighbor, direction);
+                    activeCells.RemoveAt(index);
+                }
             }
             else
             {
+                CreateWall(currentCell, null, direction);
                 activeCells.RemoveAt(index);
             }
         }
@@ -220,6 +227,25 @@ namespace ProcGenKit.WorldBuilding
             return cell;
         }
 
+        private void CreatePassage (BaseCell cell, BaseCell otherCell, CompassDirection direction)
+        {
+            CellPassage passage = Instantiate(ip.passagePrefab) as CellPassage;
+            passage.Initialize(cell, otherCell, direction);
+            passage = Instantiate(ip.passagePrefab) as CellPassage;
+            passage.Initialize(otherCell, cell, direction.GetOpposite());
+        }
+
+        private void CreateWall (BaseCell cell, BaseCell otherCell, CompassDirection direction)
+        {
+            CellWall wall = Instantiate(ip.wallPrefab) as CellWall;
+            wall.Initialize(cell, otherCell, direction);
+            if (otherCell != null)
+            {
+                wall = Instantiate(ip.wallPrefab) as CellWall;
+                wall.Initialize(otherCell, cell, direction.GetOpposite());
+            }
+        }
+
         public IntVector2 RandomCoordinates
         {
             get
@@ -231,6 +257,11 @@ namespace ProcGenKit.WorldBuilding
         public bool ContainsCoordinates (IntVector2 coordinate)
         {
             return coordinate.x >= 0 && coordinate.x < size.x && coordinate.z >= 0 && coordinate.z < size.z;
+        }
+
+        public BaseCell GetCell(IntVector2 coordinates)
+        {
+            return cells[coordinates.x, coordinates.z];
         }
 
     }
