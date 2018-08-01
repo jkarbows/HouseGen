@@ -32,6 +32,8 @@ namespace ProcGenKit.WorldBuilding
 
         public GameObject[] prefabPallete;
         public BaseCell baseCell;
+        public CellPassage passagePrefab;
+        public CellWall wallPrefab;
 
         public GameObject SelectedPrefab
         {

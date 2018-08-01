@@ -3850,7 +3850,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   rootTransform: {fileID: 447097978}
-  brushRadius: 8
+  brushRadius: 20
   brushHeight: 4
   roomDensity: 0.25
   collisionTest: 0
@@ -3862,6 +3862,10 @@ MonoBehaviour:
   prefabPallete:
   - {fileID: 1857053475215184, guid: b36c681c5848bcb4184b70ea6e7639ad, type: 2}
   baseCell: {fileID: 114552123989842718, guid: 5bdab47df7f8a4349bf29b4187cc9df8, type: 2}
+  passagePrefab: {fileID: 114402182514121998, guid: 674167ddf3c60f84499a28f78f22a1d5,
+    type: 2}
+  wallPrefab: {fileID: 114096989111236188, guid: 61eef7c99893fba48a6345d4f3f6c19c,
+    type: 2}
 --- !u!1001 &494083524
 Prefab:
   m_ObjectHideFlags: 0
@@ -4728,7 +4732,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh12234
+  m_Name: pb_Mesh12228
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
