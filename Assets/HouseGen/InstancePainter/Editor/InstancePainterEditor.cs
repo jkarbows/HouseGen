@@ -83,7 +83,7 @@ namespace ProcGenKit.WorldBuilding
             }
 
             var toDestroy = new HashSet<GameObject>();
-            for (var i = 0; i < stamp.transform.childCount; i++)
+            /*for (var i = 0; i < stamp.transform.childCount; i++)
             {
                 var child = stamp.transform.GetChild(i);
                 if (toDestroy.Contains(child.gameObject)) continue;
@@ -112,7 +112,7 @@ namespace ProcGenKit.WorldBuilding
                         }
                     }
                 }
-            }
+            }*/
             foreach (var i in toDestroy)
             {
                 DestroyImmediate(i);
