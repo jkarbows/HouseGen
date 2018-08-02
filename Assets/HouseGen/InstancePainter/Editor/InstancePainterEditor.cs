@@ -83,7 +83,7 @@ namespace ProcGenKit.WorldBuilding
             }
 
             var toDestroy = new HashSet<GameObject>();
-            for (var i = 0; i < stamp.transform.childCount; i++)
+            /*for (var i = 0; i < stamp.transform.childCount; i++)
             {
                 var child = stamp.transform.GetChild(i);
                 if (toDestroy.Contains(child.gameObject)) continue;
@@ -112,7 +112,7 @@ namespace ProcGenKit.WorldBuilding
                         }
                     }
                 }
-            }
+            }*/
             foreach (var i in toDestroy)
             {
                 DestroyImmediate(i);
@@ -183,7 +183,12 @@ namespace ProcGenKit.WorldBuilding
         {
             int index = activeCells.Count - 1;
             BaseCell currentCell = activeCells[index];
-            CompassDirection direction = CompassDirections.RandomValue;
+            if (currentCell.IsFullyInitialized)
+            {
+                activeCells.RemoveAt(index);
+                return;
+            }
+            CompassDirection direction = currentCell.RandomUninitializedDirection;
             IntVector2 coordinates = currentCell.coordinates + direction.ToIntVector2();
             if (ContainsCoordinates(coordinates))
             {
@@ -192,18 +197,16 @@ namespace ProcGenKit.WorldBuilding
                 {
                     neighbor = CreateCell(coordinates);
                     CreatePassage(currentCell, neighbor, direction);
-                    activeCells.Add(CreateCell(coordinates));
+                    activeCells.Add(neighbor);
                 }
                 else
                 {
                     CreateWall(currentCell, neighbor, direction);
-                    activeCells.RemoveAt(index);
                 }
             }
             else
             {
                 CreateWall(currentCell, null, direction);
-                activeCells.RemoveAt(index);
             }
         }
 
