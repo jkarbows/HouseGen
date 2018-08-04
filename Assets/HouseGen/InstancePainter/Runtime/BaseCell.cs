@@ -55,6 +55,16 @@ namespace ProcGenKit.WorldBuilding
                 throw new System.InvalidOperationException("BaseCell has no uninitialized directions left!");
             }
         }
+
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public abstract class CellEdge : MonoBehaviour

@@ -279,6 +279,13 @@ namespace ProcGenKit.WorldBuilding
             passage.Initialize(cell, otherCell, direction);
             passage = Instantiate(ip.passagePrefab) as CellPassage;
             passage.Initialize(otherCell, cell, direction.GetOpposite());
+            if (cell.room != otherCell.room)
+            {
+                Room roomToMerge = otherCell.room;
+                cell.room.Merge(roomToMerge);
+                rooms.Remove(roomToMerge);
+                Destroy(roomToMerge);
+            }
         }
 
         private void CreateWall (BaseCell cell, BaseCell otherCell, CompassDirection direction)

@@ -5,6 +5,10 @@ namespace ProcGenKit.WorldBuilding
     public class Door : CellPassage
     {
         public Transform hinge;
+        private bool isMirrored;
+        private static Quaternion
+            normalRotation = Quaternion.Euler(0f, -90f, 0f),
+            mirroredRotation = Quaternion.Euler(0f, 90f, 0f);
 
         private Door OtherSide
         {
@@ -20,7 +24,14 @@ namespace ProcGenKit.WorldBuilding
             if (OtherSide != null)
             {
                 // do something with the transform I guess
+                isMirrored = true;
             }
+        }
+
+        public void Open()
+        {
+            OtherSide.hinge.localRotation = hinge.localRotation = isMirrored ? mirroredRotation : normalRotation;
+            OtherSide.cell.room.Show();
         }
     }
 }

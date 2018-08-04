@@ -48,7 +48,7 @@ namespace ProcGenKit.WorldBuilding
 
             EditorGUILayout.HelpBox("Stamp: Left Click\nErase: Ctrl + Left Click\nRotate: Shift + Scroll\nBrush Size: Alt + Scroll or [ and ]\nDensity: - =\nSpace: Randomize", MessageType.Info);
             base.OnInspectorGUI();
-
+            GUILayout.Space(16);
             using (new EditorGUILayout.HorizontalScope())
             {
                 EditorGUILayout.PrefixLabel("Align to Normal");
@@ -60,7 +60,7 @@ namespace ProcGenKit.WorldBuilding
                 ip.followOnSurface = GUILayout.Toggle(ip.followOnSurface, GUIContent.none);
             }
             /*
-            GUILayout.Space(16);
+            
             if (ip.prefabPallete != null && ip.prefabPallete.Length > 0)
             {
                 RefreshPaletteImages(ip);
