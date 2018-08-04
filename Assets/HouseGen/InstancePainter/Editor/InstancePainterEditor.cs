@@ -24,6 +24,7 @@ namespace ProcGenKit.WorldBuilding
 
         IntVector2 size;
         BaseCell[,] cells;
+        List<Room> rooms = new List<Room>();
 
         void OnEnable()
         {
@@ -172,11 +173,18 @@ namespace ProcGenKit.WorldBuilding
             List<BaseCell> activeCells = new List<BaseCell>();
             IntVector2 coordinates = RandomCoordinates;
             // do the first generation step so we have something to iterate from
-            activeCells.Add(CreateCell(RandomCoordinates));
+            PerformFirstGenerationStep(activeCells);
             while (activeCells.Count > 0)
             {
                 PerformNextGenerationStep(activeCells);
             }
+        }
+
+        private void PerformFirstGenerationStep (List<BaseCell> activeCells)
+        {
+            BaseCell newCell = CreateCell(RandomCoordinates);
+            newCell.Initialize(CreateRoom(-1));
+            activeCells.Add(newCell);
         }
 
         private void PerformNextGenerationStep (List<BaseCell> activeCells)
@@ -198,6 +206,11 @@ namespace ProcGenKit.WorldBuilding
                     neighbor = CreateCell(coordinates);
                     CreatePassage(currentCell, neighbor, direction);
                     activeCells.Add(neighbor);
+                }
+                // if we match on room.settingsIndex instead we can merge same rooms
+                else if (currentCell.room == neighbor.room)
+                {
+                    CreatePassageInSameRoom(currentCell, neighbor, direction);
                 }
                 else
                 {
@@ -230,7 +243,37 @@ namespace ProcGenKit.WorldBuilding
             return cell;
         }
 
+        private Room CreateRoom (int indexToExclude)
+        {
+            Room newRoom = ScriptableObject.CreateInstance<Room>();
+            newRoom.settingsIndex = Random.Range(0, ip.roomSettings.Length);
+            if (newRoom.settingsIndex == indexToExclude)
+            {
+                newRoom.settingsIndex = (newRoom.settingsIndex + 1) % ip.roomSettings.Length;
+            }
+            newRoom.settings = ip.roomSettings[newRoom.settingsIndex];
+            rooms.Add(newRoom);
+            return newRoom;
+        }
+
         private void CreatePassage (BaseCell cell, BaseCell otherCell, CompassDirection direction)
+        {
+            CellPassage prefab = Random.value < ip.doorProbability ? ip.doorPrefab : ip.passagePrefab;
+            CellPassage passage = Instantiate(prefab) as CellPassage;
+            passage.Initialize(cell, otherCell, direction);
+            passage = Instantiate(prefab) as CellPassage;
+            if (passage is Door)
+            {
+                otherCell.Initialize(CreateRoom(-1 /*cell.room.settingsIndex*/));
+            }
+            else
+            {
+                otherCell.Initialize(cell.room);
+            }
+            passage.Initialize(otherCell, cell, direction.GetOpposite());
+        }
+
+        private void CreatePassageInSameRoom (BaseCell cell, BaseCell otherCell, CompassDirection direction)
         {
             CellPassage passage = Instantiate(ip.passagePrefab) as CellPassage;
             passage.Initialize(cell, otherCell, direction);

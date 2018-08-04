@@ -7,8 +7,15 @@ namespace ProcGenKit.WorldBuilding
     public class BaseCell : MonoBehaviour
     {
         public IntVector2 coordinates;
+        public Room room;
         private CellEdge[] edges = new CellEdge[CompassDirections.Count];
         private int initializedEdgeCount;
+
+        public void Initialize (Room room)
+        {
+            room.Add(this);
+            // set the room's wall/floor/ceiling prefabs
+        }
 
         public CellEdge GetEdge (CompassDirection direction)
         {
@@ -55,7 +62,7 @@ namespace ProcGenKit.WorldBuilding
         public BaseCell cell, otherCell;
         public CompassDirection direction;
 
-        public void Initialize (BaseCell cell, BaseCell otherCell, CompassDirection direction)
+        public virtual void Initialize (BaseCell cell, BaseCell otherCell, CompassDirection direction)
         {
             this.cell = cell;
             this.otherCell = otherCell;

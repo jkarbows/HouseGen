@@ -34,6 +34,12 @@ namespace ProcGenKit.WorldBuilding
         public BaseCell baseCell;
         public CellPassage passagePrefab;
         public CellWall wallPrefab;
+        public Door doorPrefab;
+
+        [Range(0f, 1f)]
+        public float doorProbability;
+
+        public RoomSettings[] roomSettings;
 
         public GameObject SelectedPrefab
         {

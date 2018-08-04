@@ -3866,6 +3866,15 @@ MonoBehaviour:
     type: 2}
   wallPrefab: {fileID: 114096989111236188, guid: 61eef7c99893fba48a6345d4f3f6c19c,
     type: 2}
+  doorPrefab: {fileID: 114422071082521492, guid: eab53cd475aab9e45b8fba5e80e38326,
+    type: 2}
+  doorProbability: 0.11
+  roomSettings:
+  - wallPrefab: {fileID: 1306569456963912, guid: 61eef7c99893fba48a6345d4f3f6c19c,
+      type: 2}
+    floorPrefab: {fileID: 1849456182276710, guid: 5bdab47df7f8a4349bf29b4187cc9df8,
+      type: 2}
+    ceilingPrefab: {fileID: 0}
 --- !u!1001 &494083524
 Prefab:
   m_ObjectHideFlags: 0
@@ -4732,7 +4741,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh12228
+  m_Name: pb_Mesh12240
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -5245,7 +5254,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 476162, guid: e3949bc197cfe604fa9067c20cea56f8, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -4.31
       objectReference: {fileID: 0}
     - target: {fileID: 476162, guid: e3949bc197cfe604fa9067c20cea56f8, type: 2}
       propertyPath: m_LocalPosition.y
