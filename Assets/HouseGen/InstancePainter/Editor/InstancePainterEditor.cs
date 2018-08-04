@@ -17,8 +17,6 @@ namespace ProcGenKit.WorldBuilding
         List<GameObject> erase = new List<GameObject>();
         Vector3 worldCursor;
         InstancePainter ip;
-        Variations variations;
-        Editor variationsEditor;
         List<Bounds> overlaps = new List<Bounds>();
         List<GameObject> overlappedGameObjects = new List<GameObject>();
 
@@ -33,11 +31,7 @@ namespace ProcGenKit.WorldBuilding
             ip = target as InstancePainter;
             if (ip.SelectedPrefab != null)
             {
-                variations = ip.SelectedPrefab.GetComponent<Variations>();
-                if (variationsEditor != null)
-                    DestroyImmediate(variationsEditor);
-                if (variations != null)
-                    variationsEditor = Editor.CreateEditor(variations);
+
                 CreateNewStamp();
             }
 
@@ -45,7 +39,6 @@ namespace ProcGenKit.WorldBuilding
 
         void OnDisable()
         {
-            if (variationsEditor != null) DestroyImmediate(variationsEditor);
             if (stamp != null)
                 DestroyImmediate(stamp);
         }
@@ -71,11 +64,7 @@ namespace ProcGenKit.WorldBuilding
                 // round rotation to 90 degree angles
                 eulerAngles.y = Mathf.Round(eulerAngles.y / 90f) * 90f;
                 child.transform.localEulerAngles = eulerAngles;
-                GameObject dummy;
-                if (variations != null)
-                    dummy = PrefabUtility.InstantiatePrefab(variations.gameObjects[Random.Range(0, variations.gameObjects.Count)]) as GameObject;
-                else
-                    dummy = PrefabUtility.InstantiatePrefab(ip.SelectedPrefab) as GameObject;
+                GameObject dummy = PrefabUtility.InstantiatePrefab(ip.SelectedPrefab) as GameObject;
                 foreach (var c in dummy.GetComponentsInChildren<Collider>())
                     c.enabled = false;
                 dummy.transform.parent = child.transform;
@@ -129,7 +118,6 @@ namespace ProcGenKit.WorldBuilding
 
         void PerformStamp()
         {
-            var removeVariations = ip.SelectedPrefab.GetComponent<Variations>() != null;
             for (var i = 0; i < stamp.transform.childCount; i++)
             {
                 var dummy = stamp.transform.GetChild(i);
@@ -139,7 +127,6 @@ namespace ProcGenKit.WorldBuilding
                     var prefab = PrefabUtility.GetCorrespondingObjectFromSource(stampObject.gameObject);
                     var g = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
                     Undo.RegisterCreatedObjectUndo(g, "Stamp");
-                    if (removeVariations) DestroyImmediate(g.GetComponent<Variations>());
                     g.transform.position = stampObject.position;
                     g.transform.rotation = stampObject.rotation;
                     g.transform.localScale = stampObject.lossyScale;

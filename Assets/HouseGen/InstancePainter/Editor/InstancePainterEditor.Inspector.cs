@@ -59,40 +59,6 @@ namespace ProcGenKit.WorldBuilding
                 EditorGUILayout.PrefixLabel("Follow Surface");
                 ip.followOnSurface = GUILayout.Toggle(ip.followOnSurface, GUIContent.none);
             }
-            /*
-            
-            if (ip.prefabPallete != null && ip.prefabPallete.Length > 0)
-            {
-                RefreshPaletteImages(ip);
-                var tileSize = 96;
-                var xCount = Mathf.FloorToInt(Screen.width / tileSize + 1);
-                var gridHeight = GUILayout.Height(palleteImages.Length / (xCount) * tileSize);
-                var newIndex = GUILayout.SelectionGrid(ip.selectedPrefabIndex, palleteImages, xCount, EditorStyles.miniButton, gridHeight);
-                if (newIndex != ip.selectedPrefabIndex)
-                {
-                    ip.selectedPrefabIndex = newIndex;
-                    variations = ip.SelectedPrefab.GetComponent<Variations>();
-                    if (variationsEditor != null)
-                        DestroyImmediate(variationsEditor);
-                    if (variations != null)
-                        variationsEditor = Editor.CreateEditor(variations);
-                    CreateNewStamp();
-                }
-                GUILayout.Space(16);
-                if (variationsEditor == null)
-                {
-                    if (GUILayout.Button("Add Variations"))
-                    {
-                        variations = ip.SelectedPrefab.AddComponent<Variations>();
-                        variationsEditor = Editor.CreateEditor(variations);
-                    }
-                }
-                else
-                {
-                    //variationsEditor.OnInspectorGUI();
-                }
-
-            }*/
         }
 
     }
