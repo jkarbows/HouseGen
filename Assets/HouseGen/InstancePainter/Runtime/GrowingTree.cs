@@ -5,19 +5,15 @@ using UnityEditor;
 
 namespace ProcGenKit.WorldBuilding
 {
-    public class GrowingTree : ScriptableObject
+    public class GrowingTree : GeneratorAlgorithm
     {
-        InstancePainter ip;
-        GameObject stamp;
+        public IntVector2 size;
+        public BaseCell[,] cells;
+        public List<Room> rooms = new List<Room>();
 
-        IntVector2 size;
-        BaseCell[,] cells;
-        List<Room> rooms = new List<Room>();
-
-        public void Generate(InstancePainter instancePainter, GameObject newStamp)
+        public override GameObject Generate(InstancePainter instancePainter, GameObject newStamp)
         {
-            ip = instancePainter;
-            stamp = newStamp;
+            base.Generate(instancePainter, newStamp);
             // todo: repeat for each floor, 2x2
             // each cell is 4x4
             size.x = ip.brushRadius / 4;
@@ -31,6 +27,7 @@ namespace ProcGenKit.WorldBuilding
             {
                 PerformNextGenerationStep(activeCells);
             }
+            return stamp;
         }
 
         private void PerformFirstGenerationStep(List<BaseCell> activeCells)

@@ -20,6 +20,12 @@ namespace ProcGenKit.WorldBuilding
         List<Bounds> overlaps = new List<Bounds>();
         List<GameObject> overlappedGameObjects = new List<GameObject>();
 
+        GeneratorFunction[] functions =
+        {
+            RunTest,
+            RunGrowingTree
+        };
+
         void OnEnable()
         {
             stamp = new GameObject("Stamp");
@@ -27,7 +33,6 @@ namespace ProcGenKit.WorldBuilding
             ip = target as InstancePainter;
             if (ip.SelectedPrefab != null)
             {
-
                 CreateNewStamp();
             }
 
@@ -39,13 +44,25 @@ namespace ProcGenKit.WorldBuilding
                 DestroyImmediate(stamp);
         }
 
+        static GameObject RunTest(InstancePainter ip, GameObject stamp)
+        {
+            GeneratorAlgorithm test = ScriptableObject.CreateInstance<GeneratorAlgorithm>();
+            return test.Generate(ip, stamp);
+        }
+
+        static GameObject RunGrowingTree(InstancePainter ip, GameObject stamp)
+        {
+            GrowingTree growingTree = ScriptableObject.CreateInstance<GrowingTree>();
+            return growingTree.Generate(ip, stamp);
+        }
+
         void CreateNewStamp()
         {
             while (stamp.transform.childCount > 0)
                 DestroyImmediate(stamp.transform.GetChild(0).gameObject);
 
-            GrowingTree growingTree = ScriptableObject.CreateInstance<GrowingTree>();
-            growingTree.Generate(ip, stamp);
+            GeneratorFunction generate = functions[(int)ip.algorithm];
+            stamp = generate(ip, stamp);
 
             var count = Mathf.Min(1000, (Mathf.PI * Mathf.Pow(ip.brushRadius, 2)) / (1f / ip.roomDensity));
 

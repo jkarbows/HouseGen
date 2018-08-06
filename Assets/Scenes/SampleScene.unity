@@ -3853,9 +3853,9 @@ MonoBehaviour:
   brushRadius: 20
   brushHeight: 4
   roomDensity: 0.25
-  collisionTest: 0
   maxIntersectionVolume: 0
   maxSlope: 45
+  algorithm: 1
   alignToNormal: 0
   followOnSurface: 1
   selectedPrefabIndex: 0
@@ -3875,6 +3875,7 @@ MonoBehaviour:
     floorPrefab: {fileID: 1849456182276710, guid: 5bdab47df7f8a4349bf29b4187cc9df8,
       type: 2}
     ceilingPrefab: {fileID: 0}
+    doorPrefab: {fileID: 0}
 --- !u!1001 &494083524
 Prefab:
   m_ObjectHideFlags: 0

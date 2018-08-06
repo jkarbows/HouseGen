@@ -7,12 +7,6 @@ namespace ProcGenKit.WorldBuilding
     [ExecuteInEditMode]
     public class InstancePainter : MonoBehaviour
     {
-        public enum CollisionTest
-        {
-            RendererBounds,
-            ColliderBounds
-        }
-
         public LayerMask layerMask;
         public Transform rootTransform;
         [Range(4, 32)]
@@ -20,11 +14,12 @@ namespace ProcGenKit.WorldBuilding
         [Range(4, 32)]
         public int brushHeight = 4;
         public float roomDensity = 0.25f;
-        public CollisionTest collisionTest;
         [Range(0, 1)]
         public float maxIntersectionVolume = 0;
         [Range(0, 360)]
         [HideInInspector] public float maxSlope = 180;
+
+        public AlgorithmName algorithm;
 
         [HideInInspector] public bool alignToNormal = true;
         [HideInInspector] public bool followOnSurface = true;

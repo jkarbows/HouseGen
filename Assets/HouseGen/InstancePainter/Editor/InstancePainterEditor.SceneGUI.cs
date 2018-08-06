@@ -74,30 +74,17 @@ namespace ProcGenKit.WorldBuilding
         {
             overlaps.Clear();
             overlappedGameObjects.Clear();
-            if (ip.collisionTest == InstancePainter.CollisionTest.ColliderBounds)
+
+            //TODO: This might need an oct-tree later. Brute force for now.
+            var capsule = new Bounds(Vector3.Lerp(top, bottom, 0.5f), new Vector3(brushRadius * 2, brushRadius * 2 + (top - bottom).magnitude, brushRadius * 2));
+            for (var i = 0; i < ip.rootTransform.childCount; i++)
             {
-                foreach (var c in Physics.OverlapCapsule(top, bottom, brushRadius))
+                var child = ip.rootTransform.GetChild(i);
+                var bounds = child.gameObject.GetRendererBounds();
+                if (capsule.Intersects(bounds))
                 {
-                    if (c.transform.parent == ip.rootTransform)
-                    {
-                        overlaps.Add(c.bounds);
-                        overlappedGameObjects.Add(c.gameObject);
-                    }
-                }
-            }
-            if (ip.collisionTest == InstancePainter.CollisionTest.RendererBounds)
-            {
-                //TODO: This might need an oct-tree later. Brute force for now.
-                var capsule = new Bounds(Vector3.Lerp(top, bottom, 0.5f), new Vector3(brushRadius * 2, brushRadius * 2 + (top - bottom).magnitude, brushRadius * 2));
-                for (var i = 0; i < ip.rootTransform.childCount; i++)
-                {
-                    var child = ip.rootTransform.GetChild(i);
-                    var bounds = child.gameObject.GetRendererBounds();
-                    if (capsule.Intersects(bounds))
-                    {
-                        overlaps.Add(bounds);
-                        overlappedGameObjects.Add(child.gameObject);
-                    }
+                    overlaps.Add(bounds);
+                    overlappedGameObjects.Add(child.gameObject);
                 }
             }
 

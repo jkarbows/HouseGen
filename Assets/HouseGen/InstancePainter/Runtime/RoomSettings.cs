@@ -6,6 +6,6 @@ namespace ProcGenKit.WorldBuilding
     [Serializable]
     public class RoomSettings
     {
-        public GameObject wallPrefab, floorPrefab, ceilingPrefab;
+        public GameObject wallPrefab, floorPrefab, ceilingPrefab, doorPrefab;
     }
 }
