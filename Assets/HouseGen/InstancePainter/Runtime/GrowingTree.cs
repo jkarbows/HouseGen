@@ -40,6 +40,7 @@ namespace ProcGenKit.WorldBuilding
         private void PerformNextGenerationStep(List<BaseCell> activeCells)
         {
             int index = activeCells.Count - 1;
+            index = ip.useFirstIndex ? 0 : index;
             BaseCell currentCell = activeCells[index];
             if (currentCell.IsFullyInitialized)
             {

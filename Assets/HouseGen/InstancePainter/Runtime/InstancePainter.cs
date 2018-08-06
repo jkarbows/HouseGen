@@ -20,6 +20,7 @@ namespace ProcGenKit.WorldBuilding
         [HideInInspector] public float maxSlope = 180;
 
         public AlgorithmName algorithm;
+        [HideInInspector] public bool useFirstIndex = false;
 
         [HideInInspector] public bool alignToNormal = true;
         [HideInInspector] public bool followOnSurface = true;

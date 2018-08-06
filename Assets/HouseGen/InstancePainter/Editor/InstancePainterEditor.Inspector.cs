@@ -49,6 +49,15 @@ namespace ProcGenKit.WorldBuilding
             EditorGUILayout.HelpBox("Stamp: Left Click\nErase: Ctrl + Left Click\nRotate: Shift + Scroll\nBrush Size: Alt + Scroll or [ and ]\nDensity: - =\nSpace: Randomize", MessageType.Info);
             base.OnInspectorGUI();
             GUILayout.Space(16);
+            if (functions[(int)ip.algorithm] == RunGrowingTree)
+            {
+                EditorGUILayout.HelpBox("First index will generate growing tree from the\nfirst index of the cells array rather than last", MessageType.Info);
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    EditorGUILayout.PrefixLabel("Use first index");
+                    ip.useFirstIndex = GUILayout.Toggle(ip.useFirstIndex, GUIContent.none);
+                }
+            }
             using (new EditorGUILayout.HorizontalScope())
             {
                 EditorGUILayout.PrefixLabel("Align to Normal");
